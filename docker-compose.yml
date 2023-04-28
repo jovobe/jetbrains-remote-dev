@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+    jetbrains-remote-dev:
+        image: jovobe/jetbrains-remote-dev
+        build: .
+        environment:
+            SSH_USERNAME: "${SSH_USERNAME:-jetbrains}"
+            SSH_PASSWORD: "${SSH_PASSWORD:-jetbrains}"
+            GIT_REPO: "git@github.com:dunglas/symfony-docker.git"
+        ports:
+            - "${SSH_PORT:-2222}:22"
+        volumes:
+            - ~/.ssh:/home/${SSH_USERNAME:-jetbrains}/.ssh
+            - code:/opt/project
+            - phpstorm:/opt/PhpStorm
+            - jetbrains-cache:/home/${SSH_USERNAME:-jetbrains}/.cache/JetBrains
+
+volumes:
+    code:
+    phpstorm:
+    jetbrains-cache:
